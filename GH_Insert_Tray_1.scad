@@ -6,8 +6,74 @@ Top Right: difference, intersection
 Bottom Left: intersection, difference
 Bottom Right: intersection, intersection
 */
-intersection() {
-intersection() {
+
+
+if(PRINT_PIECES == "tl"){
+    difference() {
+        difference() {
+            tray1();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "tr"){
+    difference() {
+        intersection() {
+            tray1();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "bl"){
+    intersection() {
+        difference() {
+            tray1();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "br"){
+    intersection() {
+        intersection() {
+            tray1();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else {
+    tray1();
+}
+
+module leftright(){
+    if(PRINT_PIECES != "all"){
+        // Left/Right divide
+        linear_extrude(height=100) {
+            polygon(points=[[-20,-100],[200,-100],[200,100],[-20,100],
+                [-20,70], [0,60], [0,30], [-20,20],
+                [-20,-70], [0,-60], [0,-30], [-20,-20],]);
+        }
+    }
+}
+
+module upperlower(){
+    if(PRINT_PIECES != "all"){
+        // Upper/Lower divide
+        linear_extrude(height=100) {
+            polygon(points=[[-200,10],[-200,-100],[200,-100],[200,10],
+                [130, 10], [125, 5], [100, 5], [90, 15],
+                [70, 15], [60, 5], [30, 5], [25, 5],
+                [-35, 5], [-40, 0], [-50, 0], [-60, 10],
+                [-85, 10], [-95, 0], [-110, 0], [-120, 10],
+                ]);
+        }
+    }
+}
+
+module tray1(){
     difference() {
         union() {
             translate([0, 0, BASETHICK/2]) {
@@ -59,22 +125,5 @@ intersection() {
         cornercut([-142.5, 92.5]);
         cornercut([-142.5, -92.5+THICK]);
         cornercut([142.5, -92.5+THICK]);
-    }
-
-    // Left/Right divide
-    linear_extrude(height=100) {
-        polygon(points=[[-20,-100],[200,-100],[200,100],[-20,100],
-            [-20,70], [0,60], [0,30], [-20,20],
-            [-20,-70], [0,-60], [0,-30], [-20,-20],]);
-    }
-}
-    // Upper/Lower divide
-    linear_extrude(height=100) {
-        polygon(points=[[-200,10],[-200,-100],[200,-100],[200,10],
-            [130, 10], [125, 5], [100, 5], [90, 15],
-            [70, 15], [60, 5], [30, 5], [25, 5],
-            [-35, 5], [-40, 0], [-50, 0], [-60, 10],
-            [-85, 10], [-95, 0], [-110, 0], [-120, 10],
-            ]);
     }
 }

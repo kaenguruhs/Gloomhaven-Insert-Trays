@@ -1,6 +1,7 @@
 THICK = 2; // Wall thickness everywhere - verify everything if making adjustements
 BASETHICK = 1.5; // Thickness of the solid base
 HOLE_DIA = 5; // Set to something large (say 500) to not render holes and speed up all processing
+PRINT_PIECES = "all"; // could be: all, tl, tr, bl, br
 
 $fs = 0.5; // This takes a long long time to compute, but much nicer
 
@@ -33,7 +34,7 @@ module cornercut(location) {
 module corner(location, height, direction) {
     x1 = location.x;
     y1 = location.y;
-    x1 = location.x;
+    x2 = location.x;
     y2 = location.y;
     location1 = [x1 + HOLE_DIA*2, y1];
     location2 = [x1, y1 + HOLE_DIA*2 - THICK];

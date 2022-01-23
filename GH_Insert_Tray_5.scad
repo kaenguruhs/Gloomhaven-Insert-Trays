@@ -2,7 +2,21 @@ include <ghmodules.scad>;
 /*
 top/bottom: difference/intersection
 */
-difference() {
+if(PRINT_PIECES == "tl" || PRINT_PIECES == "tr"){
+    difference() {
+        tray5();
+        upperlower();
+    }
+} else if(PRINT_PIECES == "bl" || PRINT_PIECES == "br"){
+    intersection() {
+        tray5();
+        upperlower();
+    }
+} else {
+    tray5();
+}
+
+module tray5(){
     union() {
         translate([0, 0, BASETHICK/2]) {
             cube([150, 285, BASETHICK], true);
@@ -41,14 +55,17 @@ difference() {
         translate([-75, 25, 0]) cube([THICK, 10, 35]);
 
     }
+}
 
-    // upper/lower divide
-    linear_extrude(height=40) {
-        polygon(points=[[-200,30],[-200,-200],[200,-200],[200,30],
-            [40,30], [30, 20], [10, 20], [0, 30],
-            [-35,30], [-45, 20], [-55, 20], [-65, 30],]);
+module upperlower(){
+    if(PRINT_PIECES != "all"){
+        // Upper/Lower divide
+        linear_extrude(height=40) {
+            polygon(points=[[-200,30],[-200,-200],[200,-200],[200,30],
+                [40,30], [30, 20], [10, 20], [0, 30],
+                [-35,30], [-45, 20], [-55, 20], [-65, 30],]);
+        }
     }
-
 }
 
 module supportwall(y) {

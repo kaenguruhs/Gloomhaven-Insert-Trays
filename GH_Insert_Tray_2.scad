@@ -5,8 +5,49 @@ Top Right: difference, intersection
 Bottom Left: intersection, difference
 Bottom Right: intersection, intersection
 */
-intersection() {
-intersection() {
+
+if(PRINT_PIECES == "tl"){
+    difference() {
+        difference() {
+            tray2();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "tr"){
+    difference() {
+        intersection() {
+            tray2();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "bl"){
+    intersection() {
+        difference() {
+            tray2();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "br"){
+    intersection() {
+        intersection() {
+            tray2();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else {
+    tray2();
+}
+
+
+module tray2(){
     union() {
         translate([0, 0, BASETHICK/2]) {
             cube([245, 285, BASETHICK], true);
@@ -43,22 +84,29 @@ intersection() {
         for(x=[65.5, -5.5, -63.5]) {
             divider(x, 87, 36);
         }
-        
-    }
-
-    // Left/Right divide
-    linear_extrude(height=35) {
-        polygon(points=[[5,-200],[200,-200],[200,200],[5,200],
-            [5,75], [10,70], [10,60], [5,55],
-            [5,-60], [-5,-70], [-5,-80], [5,-90],]);
     }
 }
-    // Upper/Lower divide
-    linear_extrude(height=50) {
-        polygon(points=[[-150,0],[-150,-200],[150,-200],[150,0],
-            [75, 0], [65, 10], [55, 10], [45, 0],
-            [-50, 0], [-55, 5], [-65, 5], [-70, 0],
-            ]);
+
+module leftright(){
+    if(PRINT_PIECES != "all"){
+        // Left/Right divide
+        linear_extrude(height=35) {
+            polygon(points=[[5,-200],[200,-200],[200,200],[5,200],
+                [5,75], [10,70], [10,60], [5,55],
+                [5,-60], [-5,-70], [-5,-80], [5,-90],]);
+        }
+    }
+}
+
+module upperlower(){
+    if(PRINT_PIECES != "all"){
+        // Upper/Lower divide
+        linear_extrude(height=50) {
+            polygon(points=[[-150,0],[-150,-200],[150,-200],[150,0],
+                [75, 0], [65, 10], [55, 10], [45, 0],
+                [-50, 0], [-55, 5], [-65, 5], [-70, 0],
+                ]);
+        }
     }
 }
 

@@ -6,8 +6,48 @@ Top Right: difference, intersection
 Bottom Left: intersection, difference
 Bottom Right: intersection, intersection
 */
-intersection() {
-intersection() {
+if(PRINT_PIECES == "tl"){
+    difference() {
+        difference() {
+            tray3();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "tr"){
+    difference() {
+        intersection() {
+            tray3();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "bl"){
+    intersection() {
+        difference() {
+            tray3();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else if(PRINT_PIECES == "br"){
+    intersection() {
+        intersection() {
+            tray3();
+
+            leftright();
+        }
+        upperlower();
+    }
+} else {
+    tray3();
+}
+
+
+module tray3(){
     union() {
         translate([0, 0, BASETHICK/2]) {
             cube([245, 285, BASETHICK], true);
@@ -48,7 +88,6 @@ intersection() {
         
         
         // No holes on potential joins
-        /*
         translate([122.5-THICK, -5, 0]) cube([THICK, 10, 37]);
         translate([-122.5, -5, 0]) cube([THICK, 10, 37]);
         translate([-72.5-THICK, -5, 0]) cube([THICK, 10, 23]);
@@ -59,26 +98,29 @@ intersection() {
         translate([-5, 56.5, 0]) cube([10, THICK, 23]);
         translate([-5, -6.5, 0]) cube([10, THICK, 23]);
         translate([-5, -58.5, 0]) cube([10, THICK, 23]);
-        */
     }
-
-
-    // Left/Right divide
-    linear_extrude(height=40) {
-        polygon(points=[[0,-200],[200,-200],[200,200],[0,200],
-            [0,130], [-10,120], [-10,80], [0,70],
-            [0,-70], [-10,-80], [-10,-120], [0,-130],]);
-    }
-    
 }
-    
-    // Upper/Lower divide
-    linear_extrude(height=40) {
-        polygon(points=[[-200,0],[-200,-200],[200,-200],[200,0],
-            [70, 0], [60, 10], [40, 10], [30, 0],
-            [-20, 0], [-30, 10], [-50, 10], [-60, 0],
-            ]);
-        
+
+module leftright(){
+    if(PRINT_PIECES != "all"){
+        // Left/Right divide
+        linear_extrude(height=40) {
+            polygon(points=[[0,-200],[200,-200],[200,200],[0,200],
+                [0,130], [-10,120], [-10,80], [0,70],
+                [0,-70], [-10,-80], [-10,-120], [0,-130],]);
+        }
     }
-    
+}
+
+module upperlower(){
+    if(PRINT_PIECES != "all"){
+        // Upper/Lower divide
+        linear_extrude(height=40) {
+            polygon(points=[[-200,0],[-200,-200],[200,-200],[200,0],
+                [70, 0], [60, 10], [40, 10], [30, 0],
+                [-20, 0], [-30, 10], [-50, 10], [-60, 0],
+                ]);
+            
+        }
+    }
 }

@@ -2,7 +2,22 @@ include <ghmodules.scad>;
 /*
 left/right: difference/intersection
 */
-difference() {
+
+if(PRINT_PIECES == "tl" || PRINT_PIECES == "bl"){
+    difference() {
+        tray4();
+        leftright();
+    }
+} else if(PRINT_PIECES == "tr" || PRINT_PIECES == "br"){
+    intersection() {
+        tray4();
+        leftright();
+    }
+} else {
+    tray4();
+}
+
+module tray4(){
     union() {
         translate([0, 0, BASETHICK/2]) {
             cube([285, 120, BASETHICK], true);
@@ -27,11 +42,14 @@ difference() {
             translate([-5, y, 0]) cube([10, THICK, 23]);
         }
     }
-    // Left/Right divide
-    linear_extrude(height=35) {
-        polygon(points=[[0,-200],[200,-200],[200,200],[0,200],
-            [0,-15], [-10,-25], [-10,-40], [0,-50],]);
-    }
-
 }
 
+module leftright(){
+    if(PRINT_PIECES != "all"){
+        // Left/Right divide
+        linear_extrude(height=35) {
+            polygon(points=[[0,-200],[200,-200],[200,200],[0,200],
+                [0,-15], [-10,-25], [-10,-40], [0,-50],]);
+        }
+    }
+}
